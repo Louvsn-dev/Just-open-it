@@ -22,6 +22,7 @@ body {
   text-align: center;
   width: 420px;
   box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  position: relative;
 }
 
 .people {
@@ -29,10 +30,6 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
-
-.person {
-  width: 100px;
 }
 
 .person img {
@@ -77,11 +74,38 @@ button {
 
 #no {
   background: #ddd;
-  color: #333;
   left: 10%;
 }
 
-.hearts {
+.kangaroo {
+  font-size: 70px;
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: jump 1.5s forwards;
+}
+
+@keyframes jump {
+  to {
+    bottom: 100px;
+  }
+}
+
+.flying-heart {
+  position: absolute;
+  font-size: 25px;
+  animation: fly 1s forwards;
+}
+
+@keyframes fly {
+  to {
+    transform: translate(120px, 0) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.explode {
   position: absolute;
   font-size: 20px;
   animation: explode 1s forwards;
@@ -98,19 +122,13 @@ button {
 
 <body>
 
+<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c0d1f3b64.mp3"></audio>
+
 <div class="card" id="card">
   <div class="people">
-    <div class="person">
-      <img src="louanne.jpg.jfif">
-      <p>Moi 💕</p>
-    </div>
-
+    <img src="louanne.jpg.jfif">
     <div class="heart">❤️</div>
-
-    <div class="person">
-      <img src="erwan.jpg.jfif">
-      <p>Toi 🦘</p>
-    </div>
+    <img src="erwan.jpg.jfif">
   </div>
 
   <h2>Erwan, veux-tu être mon Valentin ? 💘</h2>
@@ -126,6 +144,7 @@ button {
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const card = document.getElementById("card");
+const music = document.getElementById("music");
 
 noBtn.addEventListener("mouseover", () => {
   noBtn.style.left = Math.random() * 300 + "px";
@@ -133,28 +152,44 @@ noBtn.addEventListener("mouseover", () => {
 });
 
 yesBtn.addEventListener("click", () => {
-  for (let i = 0; i < 15; i++) {
-    const heart = document.createElement("div");
-    heart.className = "hearts";
-    heart.innerText = "❤️";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.top = Math.random() * window.innerHeight + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1000);
+  music.play();
+
+  const flyHeart = document.createElement("div");
+  flyHeart.className = "flying-heart";
+  flyHeart.innerText = "❤️";
+  flyHeart.style.left = "140px";
+  flyHeart.style.top = "120px";
+  card.appendChild(flyHeart);
+
+  setTimeout(() => flyHeart.remove(), 1000);
+
+  const kangaroo = document.createElement("div");
+  kangaroo.className = "kangaroo";
+  kangaroo.innerText = "🦘❤️";
+  card.appendChild(kangaroo);
+
+  for (let i = 0; i < 20; i++) {
+    const h = document.createElement("div");
+    h.className = "explode";
+    h.innerText = "❤️";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.top = Math.random() * window.innerHeight + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1000);
   }
 
   setTimeout(() => {
     card.innerHTML = `
       <h1>❤️ À distance, mais ensemble ❤️</h1>
       <p>
-        Tu me manques tellement…<br><br>
-        Australie, Tahiti 🌍  
-        peu importe tant que c’est toi.<br><br>
-        J’ai hâte qu’on écrive la suite  
+        Tu me manques tellement.<br><br>
+        Australie, Tahiti, peu importe<br>
+        tant que c’est toi 🌍<br><br>
+        J’ai hâte qu’on écrive la suite<br>
         de notre histoire ensemble 💌
       </p>
     `;
-  }, 800);
+  }, 1800);
 });
 </script>
 
