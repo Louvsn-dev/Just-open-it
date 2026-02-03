@@ -2,54 +2,47 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Just open it 🤍</title>
+<title>Just open it 💌</title>
 
 <style>
 body {
   margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #ffe6ef, #fff);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #fde2e4, #e0c3fc);
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 .card {
   background: white;
-  padding: 28px;
-  border-radius: 25px;
-  max-width: 420px;
-  width: 90%;
+  padding: 30px;
+  border-radius: 20px;
+  width: 360px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   position: relative;
 }
 
 .people {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 40px;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 
 .person img {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ff8fb1;
+  border: 3px solid #f4a6c1;
 }
 
 .heart {
-  font-size: 34px;
+  font-size: 32px;
   animation: float 2s infinite ease-in-out;
 }
 
@@ -59,155 +52,133 @@ img {
   100% { transform: translateY(0); }
 }
 
+h2 {
+  margin: 15px 0 10px;
+}
+
 .buttons {
-  margin-top: 18px;
+  margin-top: 20px;
   position: relative;
-  height: 50px;
 }
 
 button {
-  padding: 12px 22px;
-  font-size: 16px;
-  border: none;
+  padding: 10px 18px;
   border-radius: 20px;
+  border: none;
   cursor: pointer;
+  font-size: 14px;
 }
 
-#yes {
-  background: #ff8fb1;
+#yesBtn {
+  background: #f4a6c1;
   color: white;
 }
 
-#no {
-  background: #ddd;
+#noBtn {
+  background: #eee;
+  margin-left: 15px;
   position: absolute;
-  right: 0;
 }
 
-.kangaroo {
+.hidden {
+  display: none;
+}
+
+/* Kangourou */
+#kangourou {
   position: absolute;
-  bottom: -80px;
-  left: 50%;
-  transform: translateX(-50%) scaleX(-1);
-  width: 90px;
+  width: 70px;
+  left: 85px;
+  top: 105px;
   opacity: 0;
+  transition: transform 1.2s ease-in-out, opacity 0.3s;
 }
 
-.fly-heart {
-  position: absolute;
-  font-size: 28px;
-  opacity: 0;
-}
-
+/* Confettis */
 .confetti {
   position: fixed;
-  font-size: 18px;
-  animation: fall 1.8s forwards;
+  width: 8px;
+  height: 8px;
+  background: pink;
+  top: -10px;
+  animation: fall 3s linear forwards;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(120vh) rotate(360deg);
-    opacity: 0;
+    transform: translateY(110vh) rotate(360deg);
   }
-}
-
-.final {
-  opacity: 0;
-  transition: opacity 1.2s ease;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/10/26/audio_9c94c06b31.mp3"></audio>
-
 <div class="card" id="card">
   <div class="people">
     <div class="person">
-      <img src="Louanne.jpg">
+      <img src="louanne.jpg.jfif" alt="Louanne">
       <p>Moi 💕</p>
     </div>
 
     <div class="heart">💖</div>
 
     <div class="person">
-      <img src="Erwan.jpg">
+      <img src="erwan.jpg.jfif" alt="Erwan">
       <p>Toi 🥰</p>
     </div>
   </div>
 
+  <img src="kangourou.png" id="kangourou">
+
   <h2>Erwan, veux-tu être mon Valentin ? 💌</h2>
-  <p>
-    À distance, mais ensemble.<br>
-    Tu me manques tellement.<br><br>
-    Australie, Tahiti, peu importe tant que c’est toi.<br>
-    J’ai hâte qu’on écrive la suite de notre histoire ensemble 🤍
-  </p>
 
   <div class="buttons">
-    <button id="yes">Oui 💖</button>
-    <button id="no">Non</button>
+    <button id="yesBtn">Oui 💖</button>
+    <button id="noBtn">Non</button>
   </div>
 
-  <img src="kangourou.png" class="kangaroo" id="kangaroo">
-  <div class="fly-heart" id="flyHeart">💖</div>
+  <div id="finalMessage" class="hidden">
+    <p>À distance, mais ensemble.</p>
+    <p>Tu me manques tellement.</p>
+    <p>Australie, Tahiti, peu importe tant que c’est toi.</p>
+    <p>J’ai hâte qu’on écrive la suite de notre histoire ensemble 💕</p>
+  </div>
+
+  <audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b6e9f1c7b.mp3?filename=romantic-ambient-113124.mp3"></audio>
 </div>
 
 <script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const kangaroo = document.getElementById("kangaroo");
-const heart = document.getElementById("flyHeart");
-const card = document.getElementById("card");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const finalMessage = document.getElementById("finalMessage");
+const kangourou = document.getElementById("kangourou");
 const music = document.getElementById("music");
 
+// Bouton NON impossible
 noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 220 - 110;
-  const y = Math.random() * 120 - 60;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  noBtn.style.left = Math.random() * 200 + "px";
+  noBtn.style.top = Math.random() * 40 + "px";
+  noBtn.textContent = "Eh non 😏";
 });
 
+// Bouton OUI
 yesBtn.addEventListener("click", () => {
+  kangourou.style.opacity = 1;
+  kangourou.style.transform = "translateX(190px)";
+
   music.play();
+  finalMessage.classList.remove("hidden");
 
-  kangaroo.style.opacity = 1;
-  kangaroo.animate([
-    { transform: "translateX(-50%) scaleX(-1)" },
-    { transform: "translateX(110px) scaleX(-1)" }
-  ], { duration: 1200, fill: "forwards" });
-
-  heart.style.opacity = 1;
-  heart.animate([
-    { transform: "translate(0,0)", opacity: 1 },
-    { transform: "translate(120px,-40px)", opacity: 0 }
-  ], { duration: 1200, fill: "forwards" });
-
-  for (let i = 0; i < 30; i++) {
+  // Confettis
+  for (let i = 0; i < 80; i++) {
     const c = document.createElement("div");
     c.className = "confetti";
-    c.innerText = "💖";
-    c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.top = "-20px";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = ["#f4a6c1","#ffd6e0","#cdb4db"][Math.floor(Math.random()*3)];
     document.body.appendChild(c);
-    setTimeout(() => c.remove(), 1800);
+    setTimeout(() => c.remove(), 3000);
   }
-
-  setTimeout(() => {
-    card.classList.add("final");
-    card.innerHTML = `
-      <h2>❤️ À distance, mais ensemble ❤️</h2>
-      <p>
-        Tu me manques tellement.<br><br>
-        Australie, Tahiti 🌍<br>
-        peu importe tant que c’est toi.<br><br>
-        J’ai hâte qu’on écrive la suite<br>
-        de notre histoire ensemble 💌
-      </p>
-    `;
-    setTimeout(() => card.style.opacity = 1, 100);
-  }, 1400);
 });
 </script>
 
