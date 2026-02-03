@@ -2,197 +2,212 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Pour Erwan 💘</title>
+<title>Just open it 🤍</title>
 
 <style>
 body {
-  background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
-  font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffe6ef, #fff);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  font-family: Arial, sans-serif;
   overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 .card {
   background: white;
-  padding: 30px;
+  padding: 28px;
   border-radius: 25px;
+  max-width: 420px;
+  width: 90%;
   text-align: center;
-  width: 420px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   position: relative;
 }
 
-  .people {
+.people {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
-
 .person img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  object-fit: cover;
   border: 3px solid #ff8fb1;
 }
 
-
 .heart {
-  font-size: 40px;
+  font-size: 34px;
   animation: float 2s infinite ease-in-out;
 }
 
 @keyframes float {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0); }
 }
 
 .buttons {
+  margin-top: 18px;
   position: relative;
-  height: 80px;
-  margin-top: 20px;
+  height: 50px;
 }
 
 button {
   padding: 12px 22px;
-  font-size: 18px;
+  font-size: 16px;
   border: none;
-  border-radius: 12px;
+  border-radius: 20px;
   cursor: pointer;
-  position: absolute;
 }
 
 #yes {
-  background: #ff4d88;
+  background: #ff8fb1;
   color: white;
-  left: 40%;
 }
 
 #no {
   background: #ddd;
-  left: 10%;
+  position: absolute;
+  right: 0;
 }
 
 .kangaroo {
-  font-size: 70px;
   position: absolute;
-  bottom: -100px;
+  bottom: -80px;
   left: 50%;
-  transform: translateX(-50%);
-  animation: jump 1.5s forwards;
+  transform: translateX(-50%) scaleX(-1);
+  width: 90px;
+  opacity: 0;
 }
 
-@keyframes jump {
-  to {
-    bottom: 100px;
-  }
-}
-
-.flying-heart {
+.fly-heart {
   position: absolute;
-  font-size: 25px;
-  animation: fly 1s forwards;
+  font-size: 28px;
+  opacity: 0;
 }
 
-@keyframes fly {
+.confetti {
+  position: fixed;
+  font-size: 18px;
+  animation: fall 1.8s forwards;
+}
+
+@keyframes fall {
   to {
-    transform: translate(120px, 0) scale(1.5);
+    transform: translateY(120vh) rotate(360deg);
     opacity: 0;
   }
 }
 
-.explode {
-  position: absolute;
-  font-size: 20px;
-  animation: explode 1s forwards;
-}
-
-@keyframes explode {
-  to {
-    transform: translateY(-100px) scale(0);
-    opacity: 0;
-  }
+.final {
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c0d1f3b64.mp3"></audio>
+<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/10/26/audio_9c94c06b31.mp3"></audio>
 
 <div class="card" id="card">
   <div class="people">
-    <img src="louanne.jpg.jfif">
-    <div class="heart">❤️</div>
-    <img src="erwan.jpg.jfif">
+    <div class="person">
+      <img src="Louanne.jpg">
+      <p>Moi 💕</p>
+    </div>
+
+    <div class="heart">💖</div>
+
+    <div class="person">
+      <img src="Erwan.jpg">
+      <p>Toi 🥰</p>
+    </div>
   </div>
 
-  <h2>Erwan, veux-tu être mon Valentin ? 💘</h2>
-  <p>Même à l’autre bout du monde, je te choisis.</p>
+  <h2>Erwan, veux-tu être mon Valentin ? 💌</h2>
+  <p>
+    À distance, mais ensemble.<br>
+    Tu me manques tellement.<br><br>
+    Australie, Tahiti, peu importe tant que c’est toi.<br>
+    J’ai hâte qu’on écrive la suite de notre histoire ensemble 🤍
+  </p>
 
   <div class="buttons">
-    <button id="yes">Oui 💕</button>
-    <button id="no">Non 🙃</button>
+    <button id="yes">Oui 💖</button>
+    <button id="no">Non</button>
   </div>
+
+  <img src="kangourou.png" class="kangaroo" id="kangaroo">
+  <div class="fly-heart" id="flyHeart">💖</div>
 </div>
 
 <script>
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
+const kangaroo = document.getElementById("kangaroo");
+const heart = document.getElementById("flyHeart");
 const card = document.getElementById("card");
 const music = document.getElementById("music");
 
 noBtn.addEventListener("mouseover", () => {
-  noBtn.style.left = Math.random() * 300 + "px";
-  noBtn.style.top = Math.random() * 50 + "px";
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 120 - 60;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 
 yesBtn.addEventListener("click", () => {
   music.play();
 
-  const flyHeart = document.createElement("div");
-  flyHeart.className = "flying-heart";
-  flyHeart.innerText = "❤️";
-  flyHeart.style.left = "140px";
-  flyHeart.style.top = "120px";
-  card.appendChild(flyHeart);
+  kangaroo.style.opacity = 1;
+  kangaroo.animate([
+    { transform: "translateX(-50%) scaleX(-1)" },
+    { transform: "translateX(110px) scaleX(-1)" }
+  ], { duration: 1200, fill: "forwards" });
 
-  setTimeout(() => flyHeart.remove(), 1000);
+  heart.style.opacity = 1;
+  heart.animate([
+    { transform: "translate(0,0)", opacity: 1 },
+    { transform: "translate(120px,-40px)", opacity: 0 }
+  ], { duration: 1200, fill: "forwards" });
 
-  const kangaroo = document.createElement("div");
-  kangaroo.className = "kangaroo";
-  kangaroo.innerText = "🦘❤️";
-  card.appendChild(kangaroo);
-
-  for (let i = 0; i < 20; i++) {
-    const h = document.createElement("div");
-    h.className = "explode";
-    h.innerText = "❤️";
-    h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.top = Math.random() * window.innerHeight + "px";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 1000);
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.innerText = "💖";
+    c.style.left = Math.random() * window.innerWidth + "px";
+    c.style.top = "-20px";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 1800);
   }
 
   setTimeout(() => {
+    card.classList.add("final");
     card.innerHTML = `
-      <h1>❤️ À distance, mais ensemble ❤️</h1>
+      <h2>❤️ À distance, mais ensemble ❤️</h2>
       <p>
         Tu me manques tellement.<br><br>
-        Australie, Tahiti, peu importe<br>
-        tant que c’est toi 🌍<br><br>
+        Australie, Tahiti 🌍<br>
+        peu importe tant que c’est toi.<br><br>
         J’ai hâte qu’on écrive la suite<br>
         de notre histoire ensemble 💌
       </p>
     `;
-  }, 1800);
+    setTimeout(() => card.style.opacity = 1, 100);
+  }, 1400);
 });
 </script>
 
